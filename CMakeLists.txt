@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 
+# SET(CMAKE_CXX_COMPILER "C:/Programs/winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-18.1.8-mingw-w64ucrt-12.0.0-r1/mingw64/bin/g++.exe")
 PROJECT("MyProject")
 
 SET(CMAKE_CXX_STANDARD 17)
-SET(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations -Wall -Werror -Wnon-virtual-dtor -Woverloaded-virtual")
+SET(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations -Wall -Werror -Wnon-virtual-dtor -Woverloaded-virtual -static")
 
 #可执行文件输出目录
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
