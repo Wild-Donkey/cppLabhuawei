@@ -25,6 +25,7 @@ void ExecutorImpl::Execute(const std::string &commands) noexcept {
       pose.x += Dire[pose.heading].first;
       pose.y += Dire[pose.heading].second;
     }
+    if (i == 'L') { pose.heading = Lef[pose.heading]; }
   }
 }
 }  // namespace adas
