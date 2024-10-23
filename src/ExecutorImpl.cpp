@@ -2,6 +2,7 @@
 
 #include <map>
 #include <new>
+#include <memory>
 
 namespace adas {
   void ExecutorImpl::Execute(const std::string& commands) noexcept {
@@ -10,10 +11,22 @@ namespace adas {
         isFast ^= 1;
         continue;
       }
-      if (isFast) Move();
-      if (i == 'M') Move();
-      if (i == 'L') TurnLeft();
-      if (i == 'R') TurnRight();
+      if (isFast) {
+        std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
+        cmder->DoOperate(*this);
+      }
+      if (i == 'M') {
+        std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
+        cmder->DoOperate(*this);
+      }
+      if (i == 'L') {
+        std::unique_ptr<TurnLeftCommand> cmder = std::make_unique<TurnLeftCommand>();
+        cmder->DoOperate(*this);
+      }
+      if (i == 'R') {
+        std::unique_ptr<TurnRightCommand> cmder = std::make_unique<TurnRightCommand>();
+        cmder->DoOperate(*this);
+      }
     }
   }
   void ExecutorImpl::Move() noexcept {
