@@ -11,22 +11,12 @@ namespace adas {
         isFast ^= 1;
         continue;
       }
-      if (isFast) {
-        std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
-        cmder->DoOperate(*this);
-      }
-      if (i == 'M') {
-        std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
-        cmder->DoOperate(*this);
-      }
-      if (i == 'L') {
-        std::unique_ptr<TurnLeftCommand> cmder = std::make_unique<TurnLeftCommand>();
-        cmder->DoOperate(*this);
-      }
-      if (i == 'R') {
-        std::unique_ptr<TurnRightCommand> cmder = std::make_unique<TurnRightCommand>();
-        cmder->DoOperate(*this);
-      }
+      std::unique_ptr<ICommand> cmder;
+      cmder = std::make_unique<MoveCommand>();
+      if (isFast) cmder->DoOperate(*this);
+      if (i == 'L') cmder = std::make_unique<TurnLeftCommand>();
+      if (i == 'R') cmder = std::make_unique<TurnRightCommand>();
+      cmder->DoOperate(*this);
     }
   }
   void ExecutorImpl::Move() noexcept {

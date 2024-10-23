@@ -25,17 +25,22 @@ namespace adas {
     void Execute(const std::string& commands) noexcept override;
 
   private:
-    class MoveCommand final {
+    class ICommand {
     public:
-      void DoOperate(ExecutorImpl& executor) const noexcept { executor.Move(); }
+      virtual ~ICommand() {}
+      virtual void DoOperate(ExecutorImpl& executor)const = 0;
     };
-    class TurnLeftCommand final {
+    class MoveCommand final : public ICommand {
     public:
-      void DoOperate(ExecutorImpl& executor) const noexcept { executor.TurnLeft(); }
+      void DoOperate(ExecutorImpl& executor) const noexcept override { executor.Move(); }
     };
-    class TurnRightCommand final {
+    class TurnLeftCommand final : public ICommand {
     public:
-      void DoOperate(ExecutorImpl& executor) const noexcept { executor.TurnRight(); }
+      void DoOperate(ExecutorImpl& executor) const noexcept override { executor.TurnLeft(); }
+    };
+    class TurnRightCommand final : public ICommand {
+    public:
+      void DoOperate(ExecutorImpl& executor) const noexcept override { executor.TurnRight(); }
     };
     void Move(void) noexcept;
     void TurnLeft(void) noexcept;
