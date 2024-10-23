@@ -25,8 +25,9 @@ class ExecutorImpl : public Executor {
   void Execute(const std::string &commands) noexcept override;
 
  private:
-  // 私有数据成员，汽车当前姿态
+  void Move(void) noexcept;
   Pose pose;
+  bool isFast;
 };
 
 }  // namespace adas
