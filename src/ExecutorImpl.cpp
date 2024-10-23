@@ -4,34 +4,41 @@
 #include <new>
 
 namespace adas {
-ExecutorImpl::ExecutorImpl(const Pose &pose) noexcept
-    : pose(pose), isFast(false) {}
-Pose ExecutorImpl::Query(void) const noexcept { return pose; }
-Executor *Executor::NewExecutor(const Pose &pose) noexcept {
-  return new (std::nothrow) ExecutorImpl(pose);
-}
-void ExecutorImpl::Execute(const std::string &commands) noexcept {
-  std::map<char, std::pair<int, int> > Dire;
-  std::map<char, char> Lef, Rig;
-  Dire['E'] = {1, 0};
-  Dire['W'] = {-1, 0};
-  Dire['S'] = {0, -1};
-  Dire['N'] = {0, 1};
-  Rig[Lef['E'] = 'N'] = 'E';
-  Rig[Lef['W'] = 'S'] = 'W';
-  Rig[Lef['S'] = 'E'] = 'S';
-  Rig[Lef['N'] = 'W'] = 'N';
-  for (auto i : commands) {
-    if (isFast) {
-      pose.x += Dire[pose.heading].first;
-      pose.y += Dire[pose.heading].second;
-    }
-    if (i == 'M') {
-      pose.x += Dire[pose.heading].first;
-      pose.y += Dire[pose.heading].second;
-    }
-    if (i == 'L') { pose.heading = Lef[pose.heading]; }
-    if (i == 'R') { pose.heading = Rig[pose.heading]; }
+  void ExecutorImpl::Move(void) {
+    if (pose.heading == 'E' || pose.heading == 'W')
+      pose.x += (pose.heading == 'E' ? 1 : -1);
+    else
+      pose.y += (pose.heading == 'N' ? 1 : -1);
   }
-}
+  void ExecutorImpl::TurnLeft(void) {
+    if (pose.heading == 'E') pose.heading = 'N';
+    else if (pose.heading == 'W') pose.heading = 'S';
+    else if (pose.heading == 'S') pose.heading = 'E';
+    else pose.heading = 'W';
+  }
+  void ExecutorImpl::TurnRight(void) {
+    if (pose.heading == 'N') pose.heading = 'E';
+    else if (pose.heading == 'S') pose.heading = 'W';
+    else if (pose.heading == 'E') pose.heading = 'S';
+    else pose.heading = 'N';
+  }
+  ExecutorImpl::ExecutorImpl(const Pose& pose) noexcept
+    : pose(pose), isFast(false) {
+  }
+  Pose ExecutorImpl::Query(void) const noexcept { return pose; }
+  Executor* Executor::NewExecutor(const Pose& pose) noexcept {
+    return new (std::nothrow) ExecutorImpl(pose);
+  }
+  void ExecutorImpl::Execute(const std::string& commands) noexcept {
+    for (auto i : commands) {
+      if (i == 'F') {
+        isFast ^= 1;
+        continue;
+      }
+      if (isFast) Move();
+      if (i == 'M') Move();
+      if (i == 'L') TurnLeft();
+      if (i == 'R') TurnRight();
+    }
+  }
 }  // namespace adas
