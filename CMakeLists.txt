@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 # SET(CMAKE_CXX_COMPILER "C:/Programs/winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-18.1.8-mingw-w64ucrt-12.0.0-r1/mingw64/bin/g++.exe")
-PROJECT("MyProject")
+PROJECT("cppLabhuawei")
 
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations -Wall -Werror -Wnon-virtual-dtor -Woverloaded-virtual -static")
