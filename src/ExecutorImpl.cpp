@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <new>
+#include <unordered_map>
 
 #include "Command.hpp"
 #include "PoseHandler.hpp"
@@ -11,13 +12,14 @@ namespace adas {
 
 ExecutorImpl::ExecutorImpl(const Pose& pose) noexcept : poseHandler(pose) {}
 void ExecutorImpl::Execute(const std::string& commands) noexcept {
+  std::unordered_map<char, std::unique_ptr<ICommand> > cmderMap;
+  cmderMap.emplace('M', std::make_unique<MoveCommand>());
+  cmderMap.emplace('F', std::make_unique<FastCommand>());
+  cmderMap.emplace('L', std::make_unique<TurnLeftCommand>());
+  cmderMap.emplace('R', std::make_unique<TurnRightCommand>());
   for (auto i : commands) {
-    std::unique_ptr<ICommand> cmder;
-    if (i == 'F') cmder = std::make_unique<FastCommand>();
-    if (i == 'M') cmder = std::make_unique<MoveCommand>();
-    if (i == 'L') cmder = std::make_unique<TurnLeftCommand>();
-    if (i == 'R') cmder = std::make_unique<TurnRightCommand>();
-    cmder->DoOperate(poseHandler);
+    const auto it = cmderMap.find(i);
+    if (it != cmderMap.end()) it->second->DoOperate(poseHandler);
   }
 }
 Pose ExecutorImpl::Query(void) const noexcept { return poseHandler.Query(); }
