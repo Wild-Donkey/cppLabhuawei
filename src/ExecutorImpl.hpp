@@ -2,6 +2,7 @@
 #include <string>
 
 #include "Executor.hpp"
+#include "PoseHandler.hpp"
 
 namespace adas {
 
@@ -24,16 +25,8 @@ class ExecutorImpl final : public Executor {
   Pose Query(void) const noexcept override;
   void Execute(const std::string& commands) noexcept override;
 
- public:
-  void Move(void) noexcept;
-  void TurnLeft(void) noexcept;
-  void TurnRight(void) noexcept;
-  void Fast(void) noexcept;
-  bool IsFast(void) const noexcept;
-
  private:
-  Pose pose;
-  bool isFast;
+  PoseHandler poseHandler;
 };
 
 }  // namespace adas
