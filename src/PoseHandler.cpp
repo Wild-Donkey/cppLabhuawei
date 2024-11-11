@@ -5,7 +5,9 @@
 namespace adas {
 
 PoseHandler::PoseHandler(const Pose& pose) noexcept
-    : point(pose.x, pose.y), facing(pose.heading), fast(false) {}
+    : point(pose.x, pose.y),
+      facing(&Direction::GetDirection(pose.heading)),
+      fast(false) {}
 
 void PoseHandler::Move() noexcept {
   if (IsFast()) point += facing->Move();
