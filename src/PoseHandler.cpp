@@ -9,18 +9,9 @@ PoseHandler::PoseHandler(const Pose& pose) noexcept
       facing(&Direction::GetDirection(pose.heading)),
       fast(false) {}
 
-void PoseHandler::Move() noexcept {
-  if (IsFast()) point += facing->Move();
-  point += facing->Move();
-}
-void PoseHandler::TurnLeft() noexcept {
-  if (IsFast()) point += facing->Move();
-  facing = &(facing->LeftOne());
-}
-void PoseHandler::TurnRight() noexcept {
-  if (IsFast()) point += facing->Move();
-  facing = &(facing->RightOne());
-}
+void PoseHandler::Move() noexcept { point += facing->Move(); }
+void PoseHandler::TurnLeft() noexcept { facing = &(facing->LeftOne()); }
+void PoseHandler::TurnRight() noexcept { facing = &(facing->RightOne()); }
 void PoseHandler::Fast() noexcept { fast ^= 1; }
 bool PoseHandler::IsFast(void) const noexcept { return fast; }
 Pose PoseHandler::Query(void) const noexcept {

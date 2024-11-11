@@ -1,35 +1,37 @@
 #pragma once
+#include <functional>
+
 #include "ExecutorImpl.hpp"
 #include "PoseHandler.hpp"
 
 namespace adas {
-class ICommand {
+class MoveCommand final {
  public:
-  virtual ~ICommand() {}
-  virtual void DoOperate(PoseHandler& executor) const = 0;
+  const std::function<void(PoseHandler& PoseHandler)> operate =
+      [](PoseHandler& poseHandler) noexcept {
+        if (poseHandler.IsFast()) poseHandler.Move();
+        poseHandler.Move();
+      };
 };
-class MoveCommand final : public ICommand {
+class TurnLeftCommand final {
  public:
-  void DoOperate(PoseHandler& poseHandler) const noexcept override {
-    poseHandler.Move();
-  }
+  const std::function<void(PoseHandler& PoseHandler)> operate =
+      [](PoseHandler& poseHandler) noexcept {
+        if (poseHandler.IsFast()) poseHandler.Move();
+        poseHandler.TurnLeft();
+      };
 };
-class TurnLeftCommand final : public ICommand {
+class TurnRightCommand final {
  public:
-  void DoOperate(PoseHandler& poseHandler) const noexcept override {
-    poseHandler.TurnLeft();
-  }
+  const std::function<void(PoseHandler& PoseHandler)> operate =
+      [](PoseHandler& poseHandler) noexcept {
+        if (poseHandler.IsFast()) poseHandler.Move();
+        poseHandler.TurnRight();
+      };
 };
-class TurnRightCommand final : public ICommand {
+class FastCommand final {
  public:
-  void DoOperate(PoseHandler& poseHandler) const noexcept override {
-    poseHandler.TurnRight();
-  }
-};
-class FastCommand final : public ICommand {
- public:
-  void DoOperate(PoseHandler& poseHandler) const noexcept override {
-    poseHandler.Fast();
-  }
+  const std::function<void(PoseHandler& PoseHandler)> operate =
+      [](PoseHandler& poseHandler) noexcept { poseHandler.Fast(); };
 };
 }  // namespace adas
