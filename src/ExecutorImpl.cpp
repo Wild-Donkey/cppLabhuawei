@@ -5,23 +5,16 @@
 #include <new>
 #include <unordered_map>
 
-#include "Command.hpp"
+#include "CmderFactory.hpp"
 #include "PoseHandler.hpp"
+#include "Singleton.hpp"
 
 namespace adas {
 
 ExecutorImpl::ExecutorImpl(const Pose& pose) noexcept : poseHandler(pose) {}
 void ExecutorImpl::Execute(const std::string& commands) noexcept {
-  std::unordered_map<char, std::function<void(PoseHandler & PoseHandler)> >
-      cmderMap{
-          {'M', MoveCommand()},     {'F', FastCommand()},
-          {'L', TurnLeftCommand()}, {'R', TurnRightCommand()},
-          {'B', ReverseCommand()},
-      };
-  for (auto i : commands) {
-    const auto it = cmderMap.find(i);
-    if (it != cmderMap.end()) it->second(poseHandler);
-  }
+  const auto cmders = Singleton<CmderFactory>::Instance().GetCmders(commands);
+  for (auto i : cmders) i(poseHandler);
 }
 Pose ExecutorImpl::Query(void) const noexcept { return poseHandler.Query(); }
 Executor* Executor::NewExecutor(const Pose& pose) noexcept {
