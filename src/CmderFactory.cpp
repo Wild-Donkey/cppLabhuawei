@@ -6,9 +6,8 @@
 
 namespace adas {
 
-std::list<std::function<void(PoseHandler& poseHandler)>>
-CmderFactory::GetCmders(const std::string& commands) const noexcept {
-  std::list<std::function<void(PoseHandler & poseHandler)>> Rt;
+CmderList CmderFactory::GetCmders(const std::string& commands) const noexcept {
+  CmderList Rt;
   char Flg = 0;
   for (auto i : commands) {
     if (Flg) {
