@@ -4,7 +4,12 @@ cmake_minimum_required(VERSION 3.0)
 PROJECT("cppLabhuawei")
 
 SET(CMAKE_CXX_STANDARD 17)
-SET(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations -Wall -Werror -Wnon-virtual-dtor -Woverloaded-virtual -static")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-elaborated-enum-base")
+SET(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations -Wall -std=c++17 -Wnon-virtual-dtor -Woverloaded-virtual -static")
+# string(REPLACE "-Werror" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+# SET(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations -Wall -Werror -Wnon-virtual-dtor -Woverloaded-virtual -static")
 
 #可执行文件输出目录
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
