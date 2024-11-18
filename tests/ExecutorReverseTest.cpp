@@ -23,7 +23,6 @@ TEST(
   ASSERT_EQ(target, executor->Query());
 }
 
-// 测试输入: FR
 TEST(
     ExecutorReverseTest,
     should_return_facing_N_given_status_is_reverse_command_is_R_and_facing_is_E) {

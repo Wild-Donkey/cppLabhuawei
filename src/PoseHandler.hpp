@@ -19,6 +19,7 @@ class PoseHandler final {
   void TurnRight(void) noexcept;
   void Fast(void) noexcept;
   void Reverse(void) noexcept;
+  void TurnRound(void) noexcept;
   bool IsFast(void) const noexcept;
   bool IsReverse(void) const noexcept;
   Pose Query(void) const noexcept;

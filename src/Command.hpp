@@ -62,4 +62,13 @@ class ReverseCommand final {
     return actionGroup;
   }
 };
+class TurnRoundCommand final {
+ public:
+  ActionGroup operator()(PoseHandler& poseHandler) const noexcept {
+    ActionGroup actionGroup;
+    if (poseHandler.IsFast())
+      actionGroup.PushAction(ActionType::FORWARD_1_STEP_ACTION);
+    return actionGroup;
+  }
+};
 }  // namespace adas

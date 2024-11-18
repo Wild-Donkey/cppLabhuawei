@@ -24,7 +24,7 @@ class CmderFactory final {
  private:
   const std::unordered_map<char, Cmder> cmderMap{
       {'M', MoveCommand()}, {'L', TurnLeftCommand()}, {'R', TurnRightCommand()},
-      {'F', FastCommand()}, {'B', ReverseCommand()},
+      {'F', FastCommand()}, {'B', ReverseCommand()},  {'T', TurnRoundCommand()},
   };
 };
 
