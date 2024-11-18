@@ -104,7 +104,7 @@ TEST_F(
     SportsCarTest,
     should_return_x_minus_1_y_minus_1_and_facing_N_given_command_is_FBR_and_facing_is_E) {
   executor->Execute("FBR");
-  const Pose target{-1, -1, 'S'};
+  const Pose target{-1, -1, 'N'};
   ASSERT_EQ(target, executor->Query());
 }
 }

@@ -77,5 +77,9 @@ void ActionGroup::DoOperate(PoseHandler& poseHandler) const noexcept {
                   actionVec[static_cast<uint16_t>(actionType)](poseHandler);
                 });
 }
+ActionGroup& ActionGroup::operator+=(const ActionGroup& rhs) noexcept {
+  for (auto i : rhs.actions) actions.push_back(i);
+  return *this;
+}
 
 }  // namespace adas

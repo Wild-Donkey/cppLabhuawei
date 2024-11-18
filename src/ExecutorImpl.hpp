@@ -1,7 +1,9 @@
 #pragma once
+#include <memory>
 #include <string>
 
 #include "Executor.hpp"
+#include "cmder\CmderOrchestrator.hpp"
 #include "core\PoseHandler.hpp"
 
 namespace adas {
@@ -9,7 +11,8 @@ namespace adas {
 class ExecutorImpl final : public Executor {
  public:
   // 构造函数
-  explicit ExecutorImpl(const Pose& pose) noexcept;
+  explicit ExecutorImpl(const Pose& pose,
+                        CmderOrchestrator* orchestrator) noexcept;
 
   // 默认析构函数
   ~ExecutorImpl() noexcept = default;
@@ -27,6 +30,7 @@ class ExecutorImpl final : public Executor {
 
  private:
   PoseHandler poseHandler;
+  std::unique_ptr<CmderOrchestrator> orchestrator;
 };
 
 }  // namespace adas
