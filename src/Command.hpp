@@ -66,8 +66,12 @@ class TurnRoundCommand final {
  public:
   ActionGroup operator()(PoseHandler& poseHandler) const noexcept {
     ActionGroup actionGroup;
+    if (poseHandler.IsReverse()) return actionGroup;
     if (poseHandler.IsFast())
       actionGroup.PushAction(ActionType::FORWARD_1_STEP_ACTION);
+    actionGroup.PushAction(ActionType::TURNLEFT_ACTION);
+    actionGroup.PushAction(ActionType::FORWARD_1_STEP_ACTION);
+    actionGroup.PushAction(ActionType::TURNLEFT_ACTION);
     return actionGroup;
   }
 };
